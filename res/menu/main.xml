@@ -8,21 +8,21 @@
     
     <item 
         android:id="@+id/action_sort"
-        android:orderInCategory="10"
+        android:orderInCategory="20"
         android:showAsAction="always"
         android:icon="@drawable/sort"
         android:title="@string/sort"/>
     
     <item 
         android:id="@+id/action_refresh"
-        android:orderInCategory="20"
+        android:orderInCategory="30"
         android:showAsAction="always"
         android:icon="@drawable/refresh"
         android:title="@string/refresh"/>
     
     <item 
         android:id="@+id/action_create"
-        android:orderInCategory="30"
+        android:orderInCategory="10"
         android:showAsAction="always"
         android:icon="@drawable/create"
         android:title="@string/create"/>

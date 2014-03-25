@@ -18,6 +18,11 @@
     <string name="sort">Sort</string>
     <string name="refresh">Refresh</string>
     <string name="create">Create</string>
-
+    <string name="comment_info">TimePosted Author posted at Location</string>
+    <string name="title_activity_comment_page">CommentPageActivity</string>
+    <string name="title_activity_sort_page">SortPageActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
 
 </resources>

@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="17"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="19" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +22,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="ca.ualberta.cs.myapp.CommentPageActivity"
+            android:label="@string/title_activity_comment_page" >
+        </activity>
+        <activity
+            android:name="ca.ualberta.cs.myapp.SortPageActivity"
+            android:theme="@android:style/Theme.Dialog"
+            android:label="@string/title_activity_sort_page" >
         </activity>
     </application>
 
