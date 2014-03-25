@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MyApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="welcome">Welcome to MyApp !</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="preview">Preview</string>
+    <string name="topics">Topics</string>
+    <string name="replies">Replies</string>
+    <string name="location">Location</string>
+    <string name="default_location">Latitude \nLongitude</string>
+    <string name="cancel">Cancel</string>
+    <string name="commit">Commit</string>
+
+</resources>
