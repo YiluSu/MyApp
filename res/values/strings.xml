@@ -14,5 +14,10 @@
     <string name="default_location">Latitude \nLongitude</string>
     <string name="cancel">Cancel</string>
     <string name="commit">Commit</string>
+    <string name="profile">Profile</string>
+    <string name="sort">Sort</string>
+    <string name="refresh">Refresh</string>
+    <string name="create">Create</string>
+
 
 </resources>

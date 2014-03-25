@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     
     <item
@@ -7,7 +6,32 @@
         android:showAsAction="never"
         android:title="@string/action_settings"/>
     
-    <item
-        android:title="@string/welcome" />
-        
+    <item 
+        android:id="@+id/action_sort"
+        android:orderInCategory="10"
+        android:showAsAction="always"
+        android:icon="@drawable/sort"
+        android:title="@string/sort"/>
+    
+    <item 
+        android:id="@+id/action_refresh"
+        android:orderInCategory="20"
+        android:showAsAction="always"
+        android:icon="@drawable/refresh"
+        android:title="@string/refresh"/>
+    
+    <item 
+        android:id="@+id/action_create"
+        android:orderInCategory="30"
+        android:showAsAction="always"
+        android:icon="@drawable/create"
+        android:title="@string/create"/>
+    
+    <item 
+        android:id="@+id/action_profile"
+        android:orderInCategory="40"
+        android:showAsAction="always"
+        android:icon="@drawable/user"
+        android:title="@string/profile" />
+
 </menu>
