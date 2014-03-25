@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
 		Intent intent;
 		switch (item.getItemId()) {
 
-		case R.id.action_refresh:
+		case R.id.action_create:
 			intent = new Intent(this, CommentPageActivity.class);
 			startActivity(intent);
 			return true;
