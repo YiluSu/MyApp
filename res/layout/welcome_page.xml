@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>  
+  <RelativeLayout  
+      
+          xmlns:android="http://schemas.android.com/apk/res/android"  
+          android:id="@+id/login_layout"  
+          android:layout_width="fill_parent"  
+          android:layout_height="fill_parent"  
+          android:padding="15dip"  
+          android:layout_margin="15dip"
+           >
+          
+    <TextView
+        android:id="@+id/login_userName_input_ins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/userName_ins"
+        android:textSize="20sp" />
+                  
+    <EditText
+        android:id="@+id/user_name_input"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_userName_input_ins"
+        android:layout_marginTop="10dp"
+        android:hint="@string/enter_userName_ins"
+        android:inputType="text"
+        android:singleLine="true"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_name_input"
+        android:layout_marginTop="22dp"
+        android:text="@string/login_ins" />
+    
+  
+  </RelativeLayout>
+ 

@@ -24,7 +24,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/comment_text"
+            android:id="@+id/comment_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
@@ -44,8 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/preview"
-            android:src="@drawable/ic_launcher" />
+            android:contentDescription="@string/preview" />
     </LinearLayout>
 
     <LinearLayout

@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myapp"
+    package="com.example.projectapp"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="17"
-        android:targetSdkVersion="19" />
+        android:targetSdkVersion="18" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTENRAL_STORGE" />
+    <uses-permission android:name="android.permission.INTERNET" /> 
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/applications_internet"
         android:label="@string/app_name"
-        android:logo="@drawable/ic_launcher"
         android:theme="@android:style/Theme.Holo" >
         <activity
-            android:name="ca.ualberta.cs.myapp.MainActivity"
+            android:name="activity.LoginViewActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,14 +30,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ca.ualberta.cs.myapp.CommentPageActivity"
+            android:name="activity.AllTopicPageActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="activity.CommentPageActivity"
             android:label="@string/title_activity_comment_page" >
         </activity>
         <activity
-            android:name="ca.ualberta.cs.myapp.SortPageActivity"
-            android:theme="@android:style/Theme.Dialog"
-            android:label="@string/title_activity_sort_page" >
+            android:name="activity.SortPageActivity"
+            android:label="@string/title_activity_sort_page"
+            android:theme="@android:style/Theme.Dialog" >
         </activity>
+        <activity
+            android:name="activity.ProfilePageActivity"
+            android:label="@string/title_activity_profile_page" >
+        </activity>
+        <activity
+            android:name="activity.FavoritePageActivity"
+            android:label="@string/title_activity_favorite_page" >
+        </activity>
+        <activity
+            android:name="activity.MyCommentPageActivity"
+            android:label="@string/title_activity_my_comment_page" >
+        </activity>
+        <activity
+            android:name="activity.CreateCommentPageActivity"
+            android:label="@string/title_activity_create_comment_page" >
+        </activity>
+        
     </application>
 
 </manifest>
