@@ -31,13 +31,31 @@
             android:text="@string/content"
             android:textAppearance="?android:attr/textAppearanceLarge" />
         
-        <TextView 
-            android:id="@+id/comment_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="@string/comment_info" />
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_marginTop="6dp">
 
+            <TextView
+                android:id="@+id/comment_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/comment_info" />
+
+            <ImageButton
+                android:id="@+id/view_other_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="#000000"
+                android:contentDescription="@string/view_other_profile"
+                android:src="@drawable/book_2" />
+
+        </RelativeLayout>
+        
         <ImageView
             android:id="@+id/topic_image"
             android:layout_width="wrap_content"
@@ -45,6 +63,44 @@
             android:layout_marginTop="6dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/preview" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp" >
+
+            <ImageButton
+                android:id="@+id/comment_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="#000000"
+                android:contentDescription="@string/like"
+                android:src="@drawable/star" />
+
+            <ImageButton
+                android:id="@+id/comment_bookmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="#000000"
+                android:contentDescription="@string/bookmark"
+                android:src="@drawable/bookmark" />
+
+            <ImageButton
+                android:id="@+id/comment_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="#000000"
+                android:contentDescription="@string/edit"
+                android:src="@drawable/edit_2" />
+
+        </RelativeLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -61,11 +117,30 @@
             android:paddingBottom="2dp"
             android:paddingTop="1dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/replies"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            
+            <TextView
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_alignParentLeft="true"
+            	android:layout_centerVertical="true"
+            	android:text="@string/replies"
+            	android:textAppearance="?android:attr/textAppearanceLarge" />
+            
+            <Spinner
+        		android:id="@+id/comment_spinner"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:layout_alignParentRight="true"
+            	android:layout_centerVertical="true" />
+        </RelativeLayout>
+        
+        <TextView 
+        	android:id="@+id/comment_new_location" 
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"/>
 
         <ListView
             android:id="@+id/reply_list"

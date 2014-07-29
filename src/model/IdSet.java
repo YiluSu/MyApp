@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * A class which used to store all of the top level comment ids.
+ * A class which used to store all of the top level comment id.
  * @author xuping
- *
  */
 public class IdSet{
 	private ArrayList<String> set=null;
@@ -19,25 +18,25 @@ public class IdSet{
 	}
 	/**
 	 *
-	 * @return  all of the Comment(top level) ids in an ArrayList.
+	 * @return  all of the Comment(top level) id in an ArrayList.
 	 */
 	public ArrayList<String> getSet(){
 		return this.set;
 	}
 	/**
 	 * Add an Comment id to this IdSet
-	 * @param id a String which is a comment id.
+	 * @param id : a String which is a comment id.
 	 */
 	public void add(String id){
 		this.set.add(id);
 	}
 	
 	/**
-	 * Add a set of Comment ids to this IdSet.
-	 * @param c which is a Collection of Strings.
+	 * Add a set of Comment id to this IdSet.
+	 * @param collection : which is a Collection of Strings.
 	 */
-	public void addAll(Collection<String> c){
-		this.set.addAll(c);
+	public void addAll(Collection<String> collection){
+		this.set.addAll(collection);
 	}
 	
 	/**

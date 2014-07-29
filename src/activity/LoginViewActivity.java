@@ -1,6 +1,6 @@
 package activity;
 
-import user_name.UserNameHandler;
+import user.UserNameHandler;
 
 import com.example.projectapp.R;
 
@@ -11,12 +11,22 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
 
+/**
+ * An Activity provides user to login in to the Application.
+ * @author Xuping Fang
+ */
 public class LoginViewActivity extends Activity{
 	
 	private EditText userNameInput=null;
 	private Button loginButton=null;
 	
 	private UserNameHandler userNameHandler=null;
+	
+	/**
+	 *  onCreate method.
+	 *  Once the activity is created, first set the content view,
+	 *  Then, load views and set all the click listeners.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -29,6 +39,12 @@ public class LoginViewActivity extends Activity{
 		loginButton.setOnClickListener(new LoginClick());
 	}
 
+	/**
+	 * onResume Method
+	 * check if the user name is already exist in the shared preferences,
+	 * if exist, automatically login with the existing user name(start the AllTopicPageActivity and finish the current Activity),
+	 * Otherwise, notify user enter a user name to login.
+	 */
 	@Override
 	protected void onResume(){
 		super.onResume();
@@ -42,8 +58,15 @@ public class LoginViewActivity extends Activity{
 		}
 	}
 	
+	/**
+	 * A click listener which will perform the login when user clicked on it.
+	 */
 	private class LoginClick implements OnClickListener{
 
+		/**
+		 * Get the user name input from the EditText and set the current user name,
+		 * start the AllTopicPageActivity and finish the current Activity after click.
+		 */
 		@Override
 		public void onClick(View v){
 			String userName=userNameInput.getText().toString();

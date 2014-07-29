@@ -13,8 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/title" >
-
-        <requestFocus />
     </EditText>
 
     <EditText
@@ -25,7 +23,7 @@
         android:hint="@string/content"
         android:scrollbars="vertical" >
     </EditText>
-    
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,26 +35,58 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:background="#000000"
             android:contentDescription="@string/location"
             android:src="@drawable/location" />
 
-        <TextView
-            android:id="@+id/location"
+        <LinearLayout
+            android:id="@+id/edit_location_string"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="@string/default_location" />
+            android:orientation="vertical" >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/latitude" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/longitude" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/edit_location_string"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/edit_latitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/latitude" />
+
+            <EditText
+                android:id="@+id/edit_longitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/longitude" />
+        </LinearLayout>
     </RelativeLayout>
 
-    <ImageButton
-        android:id="@+id/edit_preview"
+    <ImageView
+        android:id="@+id/edit_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:contentDescription="@string/preview"
-        android:src="@drawable/instagram" />
+        android:contentDescription="@string/preview" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -70,8 +100,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:background="#000000"
             android:contentDescription="@string/commit"
-            android:src="@drawable/commit_1" />
+            android:src="@drawable/commit_2" />
 
         <ImageButton
             android:id="@+id/edit_cancel"
@@ -79,9 +110,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:background="#000000"
             android:contentDescription="@string/cancel"
-            android:src="@drawable/cancel_1" />
-
+            android:src="@drawable/cancel_2" />
     </RelativeLayout>
 
 </LinearLayout>

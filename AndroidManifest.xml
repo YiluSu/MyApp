@@ -9,11 +9,12 @@
         android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTENRAL_STORGE" />
-    <uses-permission android:name="android.permission.INTERNET" /> 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -38,6 +39,10 @@
             android:label="@string/title_activity_comment_page" >
         </activity>
         <activity
+            android:name="activity.EditCommentPageActivity"
+            android:label="@string/title_edit_activity_comment_page" >
+        </activity>
+        <activity
             android:name="activity.SortPageActivity"
             android:label="@string/title_activity_sort_page"
             android:theme="@android:style/Theme.Dialog" >
@@ -51,14 +56,17 @@
             android:label="@string/title_activity_favorite_page" >
         </activity>
         <activity
-            android:name="activity.MyCommentPageActivity"
-            android:label="@string/title_activity_my_comment_page" >
-        </activity>
-        <activity
             android:name="activity.CreateCommentPageActivity"
             android:label="@string/title_activity_create_comment_page" >
         </activity>
-        
+        <activity
+            android:name="activity.LocalCommentPageActivity"
+            android:label="@string/title_activity_local_comment_page" >
+        </activity>
+        <activity
+            android:name="activity.OtherProfilePageActivity"
+            android:label="@string/title_activity_other_profile_page" >
+        </activity>
     </application>
 
 </manifest>

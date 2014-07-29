@@ -15,9 +15,12 @@ import com.google.gson.JsonSerializer;
 /**
  * Provides custom serialization / deserialization for Location
  * Adapted from http://stackoverflow.com/questions/13944346/runtimeexception-in-gson-parsing-json-failed-to-invoke-protected-java-lang-class
- *
+ * @author xuping
  */
 public class LocationConverter implements JsonSerializer<Location>,JsonDeserializer<Location>{
+	/**
+	 * Encode the Location.
+	 */
 	@Override
 	public JsonElement serialize(Location t,Type type,JsonSerializationContext jsc){
 		JsonObject jo = new JsonObject();
@@ -29,6 +32,9 @@ public class LocationConverter implements JsonSerializer<Location>,JsonDeseriali
 		return jo;
 	}
 
+	/**
+	 * Decode the Location.
+	 */
 	@Override
 	public Location deserialize(JsonElement je, Type type, JsonDeserializationContext jdc) throws JsonParseException{
 		JsonObject jo = je.getAsJsonObject();

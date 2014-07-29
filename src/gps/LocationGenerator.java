@@ -8,6 +8,7 @@ import android.os.Bundle;
 /**
  * A class produce current or custom Location.
  * Adapted from https://github.com/baoliangwang/CurrentLocation
+ * @author xuping
  */
 public class LocationGenerator{
 	private LocationManager lm = null;
@@ -58,13 +59,15 @@ public class LocationGenerator{
 	 * 
 	 * @param latitude custom latitude in double.
 	 * @param longitude custom longitude in double.
-	 * @return the custom setted location by given latitude, and the given longitude.
+	 * @return the custom set location by given latitude, and the given longitude.
 	 */
 	
 	public Location getCustomLocation(double latitude,double longitude){
-		Location l=new Location(this.currentLocation);
-		l.setLatitude(latitude);
-		l.setLongitude(longitude);
+		Location l=this.lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		if(l!=null){
+			l.setLatitude(latitude);
+			l.setLongitude(longitude);
+		}
 		return l;
 	}
 	

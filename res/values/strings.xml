@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Z</string>
+    <string name="app_name">LocationBlog</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="welcome">Welcome to MyApp !</string>
@@ -12,6 +12,8 @@
     <string name="replies">Replies</string>
     <string name="location">Location</string>
     <string name="default_location">Latitude \nLongitude</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
     <string name="cancel">Cancel</string>
     <string name="commit">Commit</string>
     <string name="logout">Logout</string>
@@ -19,16 +21,20 @@
     <string name="sort">Sort</string>
     <string name="refresh">Refresh</string>
     <string name="create">Create</string>
+    <string name="edit">Edit</string>
+    <string name="like">Like</string>
+    <string name="bookmark">Bookmark</string>
     <string name="favorite">Favorite Comments</string>
     <string name="my_comment">My Comments</string>
-    <string name="comment_info">TimePosted Author posted at Location</string>
+    <string name="comment_info">Author TimePosted \nPosted at Location</string>
     <string name="title_activity_comment_page">CommentPageActivity</string>
+    <string name="title_edit_activity_comment_page">EditCommentPageActivity</string>
     <string name="title_activity_sort_page">SortPageActivity</string>
     <string name="sort_by_my_location">Sort By My Location</string>
     <string name="sort_by_other_location">Sort By Ohter Location</string>
     <string name="sort_by_picture">Sort By Picture</string>
     <string name="sort_by_date">Sort By Date</string>
-    <string name="title_activity_profile_page">ProfilePageActivity</string>
+    <string name="title_activity_profile_page">User Profile</string>
     <string name="profile_picture">Profile Picture</string>
     <string name="user_name">User Name</string>
     <string name="user_name_hint">Enter your user name</string>
@@ -38,11 +44,9 @@
     <string name="twitter_hint">Enter your twitter</string>
     <string name="facebook">Facebook</string>
     <string name="facebook_hint">Enter your facebook</string>
-    <string name="title_activity_favorite_page">FavoritePageActivity</string>
+    <string name="title_activity_favorite_page">My Favoriate</string>
     <string name="title_activity_my_comment_page">MyCommentPageActivity</string>
     <string name="title_activity_create_comment_page">CreateCommentPageActivity</string>
-    
-
     <string name="login_ins">Login</string>
     <string name="userName_ins">User Name:</string>
     <string name="defaultCommentText">&quot;Default Text&quot;</string>
@@ -66,7 +70,6 @@
     <string name="userinfopagetitle">The User Name</string>
     <string name="topiccontenttext">comment or topic contents</string>
     <string name="topicTitleText">comment title</string>
-    <string name="like">Like it</string>
     <string name="authorinfo">author/ publish date/ publish location</string>
     <string name="readlater">Read later</string>
     <string name="sortscore">Sort by score</string>
@@ -90,5 +93,10 @@
     <string name="reset_user_name_ins">Enter your new User Name here</string>
     <string name="attached_pic_dis">Preview</string>
     <string name="title_activity_CacheComment">ViewCacheCommentPage</string>
+    <string name="welcome_image_description">Welcome Image</string>
+    <string name="title_activity_local_comment_page">LocalCommentPageActivity</string>
+    <string name="prompt_for_location">Enter a desired location:</string>
+    <string name="title_activity_other_profile_page">OtherProfilePageActivity</string>
+    <string name="view_other_profile">View Author Profile</string>
 
 </resources>
