@@ -38,7 +38,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 /**
  * An Activity will display the content of a locally cached Comment to the user with the option to sort the Comment replies.
- * @author Xuping Fang, Yilu Su
+ * @author Yilu Su
  */
 public class LocalCommentPageActivity extends Activity implements OnItemSelectedListener {
 	

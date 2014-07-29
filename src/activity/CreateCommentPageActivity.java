@@ -3,7 +3,7 @@ package activity;
 import gps.LocationGenerator;
 import user.UserNameHandler;
 import model.Comment;
-import network_io.ConnectionChecker;
+//import network_io.ConnectionChecker;
 import network_io.IoStreamHandler;
 
 import com.example.projectapp.R;
@@ -24,12 +24,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 /**
  * An Activity which provide user option to create/reply a Comment with a location if GPS is enabled,
  * attach a picture to the Comment or cancel the publish.
- * @author Xuping Fang,Yilu Su
+ * @author Yilu Su
  */
 public class CreateCommentPageActivity extends Activity {
 	
@@ -129,11 +129,11 @@ public class CreateCommentPageActivity extends Activity {
 		 */
         @Override
 		public void onClick(View v){
-        	ConnectionChecker connectionChecker=new ConnectionChecker();
-			if(connectionChecker.isNetworkOnline(CreateCommentPageActivity.this)==false){
-				Toast.makeText(getApplicationContext(),"Offline.",Toast.LENGTH_SHORT).show();
-				return;
-			}
+//        	ConnectionChecker connectionChecker=new ConnectionChecker();
+//			if(connectionChecker.isNetworkOnline(CreateCommentPageActivity.this)==false){
+//				Toast.makeText(getApplicationContext(),"Offline.",Toast.LENGTH_SHORT).show();
+//				return;
+//			}
         	String commentTitle=title.getText().toString();
         	String commentContent=content.getText().toString();
         	Comment comment=new Comment(commentTitle,commentContent,currentLocation,attachedPic,userNameHandler.getUserName(CreateCommentPageActivity.this));

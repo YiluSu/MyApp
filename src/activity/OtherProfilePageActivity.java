@@ -1,6 +1,6 @@
 package activity;
 
-import network_io.ConnectionChecker;
+//import network_io.ConnectionChecker;
 import network_io.ProfileIoHandler;
 
 import com.example.projectapp.R;
@@ -12,10 +12,11 @@ import android.content.Intent;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 /**
  * An Activity allows user to view Comment author's profile (if it exists).
+ * @author Yilu Su
  */
 public class OtherProfilePageActivity extends Activity {
 	
@@ -29,7 +30,7 @@ public class OtherProfilePageActivity extends Activity {
 	
 	private ProfileIoHandler profileIoHandler=null;
 	
-	private ConnectionChecker connectionChecker=null;
+//	private ConnectionChecker connectionChecker=null;
 
 	/**
 	 * onCreate Method
@@ -53,17 +54,17 @@ public class OtherProfilePageActivity extends Activity {
 		profilePicture = (ImageView)findViewById(R.id.other_profile_picture);
 		
 		profileIoHandler=new ProfileIoHandler();
-		connectionChecker=new ConnectionChecker();
+//		connectionChecker=new ConnectionChecker();
 		
 		Intent intent=getIntent();
 		userNameValue=intent.getStringExtra("userName");
 		
-		if(connectionChecker.isNetworkOnline(this)){
+//		if(connectionChecker.isNetworkOnline(this)){
 			profileIoHandler.loadSpecificProfileForView(userNameValue,this,profilePicture,userName,biography,twitter,facebook);
-		}
-		else{
-			Toast.makeText(getApplicationContext(),"Offline.",Toast.LENGTH_SHORT).show();
-		}
+//		}
+//		else{
+//			Toast.makeText(getApplicationContext(),"Offline.",Toast.LENGTH_SHORT).show();
+//		}
 	}
 
 	/**

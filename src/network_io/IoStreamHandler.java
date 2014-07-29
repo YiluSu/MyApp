@@ -1,37 +1,40 @@
 package network_io;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
+//import java.io.InputStreamReader;
+//import java.io.UnsupportedEncodingException;
+//import java.lang.reflect.Type;
 import java.util.Date;
 
-import org.apache.http.HttpEntity;
+
+//import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
+//import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
+//import org.apache.http.client.methods.HttpGet;
+//import org.apache.http.client.methods.HttpPut;
+//import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import model.Comment;
 import model.CommentMap;
 import model.IdSet;
-
 import android.app.Activity;
 import android.location.Location;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import cache.CacheController;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+//import com.google.gson.reflect.TypeToken;
 
 import customlized_gson.GsonConstructor;
 
@@ -40,7 +43,7 @@ import customlized_gson.GsonConstructor;
 /**
  * A network controller used to get and update comment from/to the server.
  * Adapted From https://github.com/zjullion/PicPosterComplete/blob/master/src/ca/ualberta/cs/picposter/network/ElasticSearchOperations.java
- * @author xuping
+ * @author Yilu Su
  */
 public class IoStreamHandler {
 	
@@ -64,30 +67,39 @@ public class IoStreamHandler {
 		Thread thread=new Thread(){
 			@Override
 			public void run(){
-				HttpClient client=new DefaultHttpClient();
-				HttpPut request = new HttpPut(SERVER_URL+"Comment/"+comment.getId()+"/");
-				try{
-					request.setEntity(new StringEntity(gson.toJson(comment)));
-				}
-				catch(UnsupportedEncodingException exception){
-					Log.w(LOG_TAG, "Error during Encoding: " + exception.getMessage());
-					return;
+				try {
+					String fileName = Environment.getExternalStorageDirectory().getPath() + "/Comment-" + comment.getId() + ".txt";
+					FileWriter fileWriter = new FileWriter(fileName);
+					BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+					bufferedWriter.write(gson.toJson(comment));
+					bufferedWriter.close();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 				
-				HttpResponse response=null;
-				try{
-					response = client.execute(request);
-					Log.i(LOG_TAG, "CommentUpdate: " + response.getStatusLine().toString());
-				}
-				catch(IOException exception){
-					Log.w(LOG_TAG, "Error during Update: " + exception.getMessage());
-				}
+//				HttpClient client=new DefaultHttpClient();
+//				HttpPut request = new HttpPut(SERVER_URL+"Comment/"+comment.getId()+"/");
+//				try{
+//					request.setEntity(new StringEntity(gson.toJson(comment)));
+//				}
+//				catch(UnsupportedEncodingException exception){
+//					Log.w(LOG_TAG, "Error during Encoding: " + exception.getMessage());
+//					return;
+//				}
+//				
+//				HttpResponse response=null;
+//				try{
+//					response = client.execute(request);
+//					Log.i(LOG_TAG, "CommentUpdate: " + response.getStatusLine().toString());
+//				}
+//				catch(IOException exception){
+//					Log.w(LOG_TAG, "Error during Update: " + exception.getMessage());
+//				}
 			}
 		};
 		thread.start();
 		return thread;
 	}
-	
 	
 	/**
 	 * Put a Comment with the specific id into the CommentMap from the web server.
@@ -95,42 +107,58 @@ public class IoStreamHandler {
 	 * @param commentMap : a CommentMap to be update.
 	 * @param activity : an Activity where the function will be called.
 	 * @return the thread which perform the download operation.
-	 */
-	
+	 */	
 	public Thread loadSpecificComment(final String commentID,final CommentMap commentMap,final Activity activity){
 		Thread thread=new Thread(){
 			@Override
 			public void run(){
-				HttpClient client=new DefaultHttpClient();
-				HttpGet request = new HttpGet(SERVER_URL+"Comment/"+commentID+"/");
-				HttpResponse response=null;
 				String responseJson = "";
-				try{
-					response=client.execute(request);
-					Log.i(LOG_TAG, "CommentLoad: " + response.getStatusLine().toString());
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
-					String output = reader.readLine();
+				try {
+					FileReader fileReader = new FileReader(Environment.getExternalStorageDirectory().getPath() + "/Comment-" + commentID + ".txt");
+					BufferedReader bufferedReader = new BufferedReader(fileReader);
+					String output = bufferedReader.readLine();
 					while (output != null) {
 						responseJson+= output;
-						output = reader.readLine();
+						output = bufferedReader.readLine();
 					}
-				} 
-				catch (ClientProtocolException e){
-					e.printStackTrace();
-				} 
-				catch (IOException e){
-					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+					bufferedReader.close();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
-				final ElasticSearchResponse<Comment> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+//				HttpClient client=new DefaultHttpClient();
+//				HttpGet request = new HttpGet(SERVER_URL+"Comment/"+commentID+"/");
+//				HttpResponse response=null;
+//				String responseJson = "";
+//				try{
+//					response=client.execute(request);
+//					Log.i(LOG_TAG, "CommentLoad: " + response.getStatusLine().toString());
+//					HttpEntity entity = response.getEntity();
+//					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
+//					String output = reader.readLine();
+//					while (output != null) {
+//						responseJson+= output;
+//						output = reader.readLine();
+//					}
+//				} 
+//				catch (ClientProtocolException e){
+//					e.printStackTrace();
+//				} 
+//				catch (IOException e){
+//					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+//					e.printStackTrace();
+//				}
+				
+//				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
+//				final ElasticSearchResponse<Comment> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+				
+				final Comment comment = gson.fromJson(responseJson, Comment.class);
 				
 				Runnable getComment = new Runnable() {
 					@Override
 					public void run() {
-						Comment comment=Data.getSource();
+							
+//						Comment comment=Data.getSource();
 						if(comment!=null){
 							commentMap.addComment(comment);
 						}
@@ -147,33 +175,42 @@ public class IoStreamHandler {
 	 * Update the top level comment's IdSet which stored in the server, if there's nothing in the server, then add it to the server.
 	 * @param idSet : top level comment's IdSet.
 	 * @return the thread which perform the upload operation.
-	 */
-	
+	 */	
 	public Thread updateTopLevelIdSet(final IdSet idSet){
 		Thread thread=new Thread(){
 			@Override
 			public void run(){
-				HttpClient client=new DefaultHttpClient();
-				HttpPut request = new HttpPut(SERVER_URL+"IdSet/topLevelId/");
 				try {
-					request.setEntity(new StringEntity(gson.toJson(idSet)));
-				} 
-				catch (UnsupportedEncodingException e) {
-					Log.w(LOG_TAG, "Error during Encoding: " + e.getMessage());
+					String fileName = Environment.getExternalStorageDirectory().getPath() + "/IdSet-topLevelId-" + ".txt";
+					FileWriter fileWriter = new FileWriter(fileName);
+					BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+					bufferedWriter.write(gson.toJson(idSet));
+					bufferedWriter.close();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				HttpResponse response=null;
-				try {
-					response = client.execute(request);
-					Log.i(LOG_TAG, "SetUpdate: " + response.getStatusLine().toString());
-				} 
-				catch (ClientProtocolException e) {
-					e.printStackTrace();
-				} 
-				catch (IOException e) {
-					Log.w(LOG_TAG, "Error during Update: " + e.getMessage());
-					e.printStackTrace();
-				}
+				
+//				HttpClient client=new DefaultHttpClient();
+//				HttpPut request = new HttpPut(SERVER_URL+"IdSet/topLevelId/");
+//				try {
+//					request.setEntity(new StringEntity(gson.toJson(idSet)));
+//				} 
+//				catch (UnsupportedEncodingException e) {
+//					Log.w(LOG_TAG, "Error during Encoding: " + e.getMessage());
+//					e.printStackTrace();
+//				}
+//				HttpResponse response=null;
+//				try {
+//					response = client.execute(request);
+//					Log.i(LOG_TAG, "SetUpdate: " + response.getStatusLine().toString());
+//				} 
+//				catch (ClientProtocolException e) {
+//					e.printStackTrace();
+//				} 
+//				catch (IOException e) {
+//					Log.w(LOG_TAG, "Error during Update: " + e.getMessage());
+//					e.printStackTrace();
+//				}
 			}
 		};
 		thread.start();
@@ -190,32 +227,48 @@ public class IoStreamHandler {
 		Thread thread=new Thread(){
 			@Override
 			public void run(){
-				HttpClient client=new DefaultHttpClient();
-				HttpGet request = new HttpGet(SERVER_URL+"IdSet/topLevelId/");
-				HttpResponse response=null;
 				String responseJson = "";
 				try {
-					response=client.execute(request);
-					Log.i(LOG_TAG, "SetLoad: " + response.getStatusLine().toString());
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
-					String output = reader.readLine();
+					FileReader fileReader = new FileReader(Environment.getExternalStorageDirectory().getPath() + "/IdSet-topLevelId-" + ".txt");
+					BufferedReader bufferedReader = new BufferedReader(fileReader);
+					String output = bufferedReader.readLine();
 					while (output != null) {
 						responseJson+= output;
-						output = reader.readLine();
+						output = bufferedReader.readLine();
 					}
-				} 
-				catch (ClientProtocolException e) {
-					e.printStackTrace();
-				} 
-				catch (IOException e) {
-					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+					bufferedReader.close();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<IdSet>>(){}.getType();
-				final ElasticSearchResponse<IdSet> Data = gson.fromJson(responseJson,elasticSearchResponseType);
-				IdSet idSet=Data.getSource();
+//				HttpClient client=new DefaultHttpClient();
+//				HttpGet request = new HttpGet(SERVER_URL+"IdSet/topLevelId/");
+//				HttpResponse response=null;
+//				String responseJson = "";
+//				try {
+//					response=client.execute(request);
+//					Log.i(LOG_TAG, "SetLoad: " + response.getStatusLine().toString());
+//					HttpEntity entity = response.getEntity();
+//					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
+//					String output = reader.readLine();
+//					while (output != null) {
+//						responseJson+= output;
+//						output = reader.readLine();
+//					}
+//				} 
+//				catch (ClientProtocolException e) {
+//					e.printStackTrace();
+//				} 
+//				catch (IOException e) {
+//					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+//					e.printStackTrace();
+//				}
+				
+//				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<IdSet>>(){}.getType();
+//				final ElasticSearchResponse<IdSet> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+//				if (Data == null) return;
+//				IdSet idSet=Data.getSource();
+				IdSet idSet = gson.fromJson(responseJson, IdSet.class);	
 				if(idSet!=null){
 					for(String id : idSet.getSet()){
 						loadSpecificComment(id,commentMap,activity);
@@ -232,45 +285,63 @@ public class IoStreamHandler {
 	 * @param commentID : a String which is the comment id to be add to the IdSet.
 	 * @param activity : an Activity where the function will be called.
 	 * @return the Thread which perform the update operation.
-	 */
-	
+	 */	
 	public Thread loadAndUpdateTopLevelIdSet(final String commentID,final Activity activity){
 		Thread thread=new Thread(){
 			@Override
 			public void run(){
-				HttpClient client=new DefaultHttpClient();
-				HttpGet request = new HttpGet(SERVER_URL+"IdSet/topLevelId/");
-				HttpResponse response=null;
 				String responseJson = "";
 				try {
-					response=client.execute(request);
-					Log.i(LOG_TAG, "SetLoad: " + response.getStatusLine().toString());
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
-					String output = reader.readLine();
+					FileReader fileReader = new FileReader(Environment.getExternalStorageDirectory().getPath() + "/IdSet-topLevelId-" + ".txt");
+					BufferedReader bufferedReader = new BufferedReader(fileReader);
+					String output = bufferedReader.readLine();
 					while (output != null) {
-						responseJson+=output;
-						output = reader.readLine();
+						responseJson+= output;
+						output = bufferedReader.readLine();
 					}
-				}
-				catch (ClientProtocolException e) {
-					e.printStackTrace();
-				} 
-				catch (IOException e){
-					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+					bufferedReader.close();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<IdSet>>(){}.getType();
-				final ElasticSearchResponse<IdSet> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+//				HttpClient client=new DefaultHttpClient();
+//				HttpGet request = new HttpGet(SERVER_URL+"IdSet/topLevelId/");
+//				HttpResponse response=null;
+//				String responseJson = "";
+//				try {
+//					response=client.execute(request);
+//					Log.i(LOG_TAG, "SetLoad: " + response.getStatusLine().toString());
+//					HttpEntity entity = response.getEntity();
+//					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
+//					String output = reader.readLine();
+//					while (output != null) {
+//						responseJson+=output;
+//						output = reader.readLine();
+//					}
+//				}
+//				catch (ClientProtocolException e) {
+//					e.printStackTrace();
+//				} 
+//				catch (IOException e){
+//					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+//					e.printStackTrace();
+//				}
+				
+//				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<IdSet>>(){}.getType();
+//				final ElasticSearchResponse<IdSet> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+				
+				IdSet tempIdSet = gson.fromJson(responseJson, IdSet.class);	
+				if(tempIdSet==null) tempIdSet=new IdSet();
+				final IdSet idSet = tempIdSet;
+				
 				Runnable updateIdSet = new Runnable() {
 					@Override
 					public void run() {
-						IdSet idSet=Data.getSource();
-						if(idSet==null){
-							idSet=new IdSet();
-						}
+//						IdSet idSet=null;
+//						idSet=Data.getSource();
+//						if(idSet==null) idSet=new IdSet();
 						idSet.add(commentID);
+						System.out.println(commentID);
 						updateTopLevelIdSet(idSet);
 					}
 				};
@@ -280,6 +351,7 @@ public class IoStreamHandler {
 		thread.start();
 		return thread;
 	}
+	
 	/**
 	 * Load and display a specific Comment's major content in CommentPageActivity (an Activity displays a specific Comment's content).
 	 * @param commentID : a String which is the comment id of the Comment.
@@ -295,35 +367,52 @@ public class IoStreamHandler {
 		Thread thread=new Thread(){
 			@Override
 			public void run(){
-				HttpClient client=new DefaultHttpClient();
-				HttpGet request = new HttpGet(SERVER_URL+"Comment/"+commentID+"/");
-				HttpResponse response=null;
 				String responseJson = "";
-				try{
-					response=client.execute(request);
-					Log.i(LOG_TAG, "CommentLoadAndSet: " + response.getStatusLine().toString());
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
-					String output = reader.readLine();
+				try {
+					FileReader fileReader = new FileReader(Environment.getExternalStorageDirectory().getPath() + "/Comment-" + commentID + ".txt");
+					BufferedReader bufferedReader = new BufferedReader(fileReader);
+					String output = bufferedReader.readLine();
 					while (output != null) {
 						responseJson+= output;
-						output = reader.readLine();
+						output = bufferedReader.readLine();
 					}
-				} 
-				catch (ClientProtocolException e){
-					e.printStackTrace();
-				} 
-				catch (IOException e){
-					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+					bufferedReader.close();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
-				final ElasticSearchResponse<Comment> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+//				HttpClient client=new DefaultHttpClient();
+//				HttpGet request = new HttpGet(SERVER_URL+"Comment/"+commentID+"/");
+//				HttpResponse response=null;
+//				String responseJson = "";
+//				try{
+//					response=client.execute(request);
+//					Log.i(LOG_TAG, "CommentLoadAndSet: " + response.getStatusLine().toString());
+//					HttpEntity entity = response.getEntity();
+//					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
+//					String output = reader.readLine();
+//					while (output != null) {
+//						responseJson+= output;
+//						output = reader.readLine();
+//					}
+//				} 
+//				catch (ClientProtocolException e){
+//					e.printStackTrace();
+//				} 
+//				catch (IOException e){
+//					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+//					e.printStackTrace();
+//				}
+				
+//				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
+//				final ElasticSearchResponse<Comment> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+				
+				final Comment comment = gson.fromJson(responseJson, Comment.class);	
+				
 				Runnable getAndSetComment = new Runnable() {
 					@Override
 					public void run() {
-						Comment comment=Data.getSource();
+//						Comment comment=Data.getSource();
 						if(comment!=null){
 							title.setText(comment.getTitle());
 							content.setText(comment.getText());
@@ -362,32 +451,49 @@ public class IoStreamHandler {
 		Thread thread=new Thread(){
 			@Override
 			public void run(){
-				HttpClient client=new DefaultHttpClient();
-				HttpGet request = new HttpGet(SERVER_URL+"Comment/"+parentID+"/");
-				HttpResponse response=null;
 				String responseJson = "";
-				try{
-					response=client.execute(request);
-					Log.i(LOG_TAG, "CommentLoad: " + response.getStatusLine().toString());
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
-					String output = reader.readLine();
+				try {
+					FileReader fileReader = new FileReader(Environment.getExternalStorageDirectory().getPath() + "/Comment-" + parentID + ".txt");
+					BufferedReader bufferedReader = new BufferedReader(fileReader);
+					String output = bufferedReader.readLine();
 					while (output != null) {
 						responseJson+= output;
-						output = reader.readLine();
+						output = bufferedReader.readLine();
 					}
-				} 
-				catch (ClientProtocolException e){
-					e.printStackTrace();
-				} 
-				catch (IOException e){
-					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+					bufferedReader.close();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
-				final ElasticSearchResponse<Comment> Data = gson.fromJson(responseJson,elasticSearchResponseType);
-				Comment parent=Data.getSource();
+//				HttpClient client=new DefaultHttpClient();
+//				HttpGet request = new HttpGet(SERVER_URL+"Comment/"+parentID+"/");
+//				HttpResponse response=null;
+//				String responseJson = "";
+//				try{
+//					response=client.execute(request);
+//					Log.i(LOG_TAG, "CommentLoad: " + response.getStatusLine().toString());
+//					HttpEntity entity = response.getEntity();
+//					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
+//					String output = reader.readLine();
+//					while (output != null) {
+//						responseJson+= output;
+//						output = reader.readLine();
+//					}
+//				} 
+//				catch (ClientProtocolException e){
+//					e.printStackTrace();
+//				} 
+//				catch (IOException e){
+//					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+//					e.printStackTrace();
+//				}
+				
+//				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
+//				final ElasticSearchResponse<Comment> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+				
+				Comment parent = gson.fromJson(responseJson, Comment.class);
+				
+//				Comment parent=Data.getSource();
 				parent.addReply(replyID);
 				addOrUpdateComment(parent);
 			}
@@ -395,6 +501,7 @@ public class IoStreamHandler {
 		thread.start();
 		return thread;
 	}
+	
 	/**
 	 * Load and display a specific Comment's major content in EditCommentPageActivity (an Activity displays a specific Comment's content and allows user to edit).
 	 * @param commentID : a String which is the Comment's id.
@@ -410,35 +517,52 @@ public class IoStreamHandler {
 		Thread thread=new Thread(){
 			@Override
 			public void run(){
-				HttpClient client=new DefaultHttpClient();
-				HttpGet request = new HttpGet(SERVER_URL+"Comment/"+commentID+"/");
-				HttpResponse response=null;
 				String responseJson = "";
-				try{
-					response=client.execute(request);
-					Log.i(LOG_TAG, "CommentLoad: " + response.getStatusLine().toString());
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
-					String output = reader.readLine();
+				try {
+					FileReader fileReader = new FileReader(Environment.getExternalStorageDirectory().getPath() + "/Comment-" + commentID + ".txt");
+					BufferedReader bufferedReader = new BufferedReader(fileReader);
+					String output = bufferedReader.readLine();
 					while (output != null) {
 						responseJson+= output;
-						output = reader.readLine();
+						output = bufferedReader.readLine();
 					}
-				} 
-				catch (ClientProtocolException e){
-					e.printStackTrace();
-				} 
-				catch (IOException e){
-					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+					bufferedReader.close();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
-				final ElasticSearchResponse<Comment> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+//				HttpClient client=new DefaultHttpClient();
+//				HttpGet request = new HttpGet(SERVER_URL+"Comment/"+commentID+"/");
+//				HttpResponse response=null;
+//				String responseJson = "";
+//				try{
+//					response=client.execute(request);
+//					Log.i(LOG_TAG, "CommentLoad: " + response.getStatusLine().toString());
+//					HttpEntity entity = response.getEntity();
+//					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
+//					String output = reader.readLine();
+//					while (output != null) {
+//						responseJson+= output;
+//						output = reader.readLine();
+//					}
+//				} 
+//				catch (ClientProtocolException e){
+//					e.printStackTrace();
+//				} 
+//				catch (IOException e){
+//					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+//					e.printStackTrace();
+//				}
+				
+//				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
+//				final ElasticSearchResponse<Comment> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+				
+				final Comment comment = gson.fromJson(responseJson, Comment.class);
+				
 				Runnable getAndSetEditComment = new Runnable(){
 					@Override
 					public void run(){
-						Comment comment=Data.getSource();
+//						Comment comment=Data.getSource();
 						title.setText(comment.getTitle());
 						content.setText(comment.getText());
 						Location loc=comment.getLocation();
@@ -456,7 +580,6 @@ public class IoStreamHandler {
 		thread.start();
 		return thread;
 	}
-	
 
 	/**
 	 * Update a edited Comment in to the server.
@@ -469,32 +592,49 @@ public class IoStreamHandler {
 		Thread thread=new Thread(){
 			@Override
 			public void run(){
-				HttpClient client=new DefaultHttpClient();
-				HttpGet request = new HttpGet(SERVER_URL+"Comment/"+commentID+"/");
-				HttpResponse response=null;
 				String responseJson = "";
-				try{
-					response=client.execute(request);
-					Log.i(LOG_TAG, "CommentLoad: " + response.getStatusLine().toString());
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
-					String output = reader.readLine();
+				try {
+					FileReader fileReader = new FileReader(Environment.getExternalStorageDirectory().getPath() + "/Comment-" + commentID + ".txt");
+					BufferedReader bufferedReader = new BufferedReader(fileReader);
+					String output = bufferedReader.readLine();
 					while (output != null) {
 						responseJson+= output;
-						output = reader.readLine();
+						output = bufferedReader.readLine();
 					}
-				} 
-				catch (ClientProtocolException e){
-					e.printStackTrace();
-				} 
-				catch (IOException e){
-					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+					bufferedReader.close();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
-				final ElasticSearchResponse<Comment> Data = gson.fromJson(responseJson,elasticSearchResponseType);
-				Comment comment=Data.getSource();
+//				HttpClient client=new DefaultHttpClient();
+//				HttpGet request = new HttpGet(SERVER_URL+"Comment/"+commentID+"/");
+//				HttpResponse response=null;
+//				String responseJson = "";
+//				try{
+//					response=client.execute(request);
+//					Log.i(LOG_TAG, "CommentLoad: " + response.getStatusLine().toString());
+//					HttpEntity entity = response.getEntity();
+//					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
+//					String output = reader.readLine();
+//					while (output != null) {
+//						responseJson+= output;
+//						output = reader.readLine();
+//					}
+//				} 
+//				catch (ClientProtocolException e){
+//					e.printStackTrace();
+//				} 
+//				catch (IOException e){
+//					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+//					e.printStackTrace();
+//				}
+				
+//				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
+//				final ElasticSearchResponse<Comment> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+				
+				Comment comment = gson.fromJson(responseJson, Comment.class);
+				
+//				Comment comment=Data.getSource();
 				comment.setTitle(editedTitle);
 				comment.setText(editedText);
 				comment.setLocation(editedLocation);
@@ -518,36 +658,52 @@ public class IoStreamHandler {
 		Thread thread=new Thread(){
 			@Override
 			public void run(){
-				HttpClient client=new DefaultHttpClient();
-				HttpGet request = new HttpGet(SERVER_URL+"Comment/"+commentID+"/");
-				HttpResponse response=null;
 				String responseJson = "";
-				try{
-					response=client.execute(request);
-					Log.i(LOG_TAG, "CommentLoad: " + response.getStatusLine().toString());
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
-					String output = reader.readLine();
+				try {
+					FileReader fileReader = new FileReader(Environment.getExternalStorageDirectory().getPath() + "/Comment-" + commentID + ".txt");
+					BufferedReader bufferedReader = new BufferedReader(fileReader);
+					String output = bufferedReader.readLine();
 					while (output != null) {
-						responseJson+=output;
-						output = reader.readLine();
+						responseJson+= output;
+						output = bufferedReader.readLine();
 					}
-				} 
-				catch (ClientProtocolException e){
-					e.printStackTrace();
-				} 
-				catch (IOException e){
-					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+					bufferedReader.close();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
-				final ElasticSearchResponse<Comment> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+//				HttpClient client=new DefaultHttpClient();
+//				HttpGet request = new HttpGet(SERVER_URL+"Comment/"+commentID+"/");
+//				HttpResponse response=null;
+//				String responseJson = "";
+//				try{
+//					response=client.execute(request);
+//					Log.i(LOG_TAG, "CommentLoad: " + response.getStatusLine().toString());
+//					HttpEntity entity = response.getEntity();
+//					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
+//					String output = reader.readLine();
+//					while (output != null) {
+//						responseJson+=output;
+//						output = reader.readLine();
+//					}
+//				} 
+//				catch (ClientProtocolException e){
+//					e.printStackTrace();
+//				} 
+//				catch (IOException e){
+//					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+//					e.printStackTrace();
+//				}
+				
+//				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
+//				final ElasticSearchResponse<Comment> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+				
+				final Comment comment = gson.fromJson(responseJson, Comment.class);
 				
 				Runnable putCacheReply = new Runnable() {
 					@Override
 					public void run() {
-						Comment comment=Data.getSource();
+//						Comment comment=Data.getSource();
 						if(!tag.equals("reply")){
 							cc.addCacheAsTopLevel(activity,comment,tag);
 						}

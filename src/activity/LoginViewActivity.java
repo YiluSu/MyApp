@@ -13,7 +13,7 @@ import android.widget.*;
 
 /**
  * An Activity provides user to login in to the Application.
- * @author Xuping Fang
+ * @author Yilu Su
  */
 public class LoginViewActivity extends Activity{
 	

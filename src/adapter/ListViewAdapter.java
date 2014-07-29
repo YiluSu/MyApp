@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 /**
  * A List View Adapter which maps information from the comment model to the view
- * Adapted from https://github.com/XUPINGI/PicPosterComplete/blob/master/src/ca/ualberta/cs/picposter/view/PicPostModelAdapter.java
+ * Adapted from https://github.com/YiluSu/PicPosterComplete/blob/master/src/ca/ualberta/cs/picposter/view/PicPostModelAdapter.java
  */
 public class ListViewAdapter extends ArrayAdapter<Comment>{
 	

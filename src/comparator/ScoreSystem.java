@@ -8,7 +8,7 @@ import model.Comment;
 
 /**
  * A comparator class which compute 2 Comment object's score and sort them by score.
- * @author xuping
+ * @author Yilu Su
  */
 public class ScoreSystem implements Comparator<Comment>{
 	

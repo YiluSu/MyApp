@@ -1,7 +1,7 @@
 package activity;
 
 import gps.LocationGenerator;
-import network_io.ConnectionChecker;
+//import network_io.ConnectionChecker;
 import network_io.IoStreamHandler;
 
 import com.example.projectapp.R;
@@ -26,7 +26,7 @@ import android.widget.Toast;
  * existing comment and provide the Comment 
  * author option to edit the Comment and update it 
  * on the server.
- * @author Xuping Fang, Yilu Su
+ * @author Yilu Su
  */
 public class EditCommentPageActivity extends Activity {
 	
@@ -105,11 +105,11 @@ public class EditCommentPageActivity extends Activity {
 		 */
 		@Override
 		public void onClick(View v){
-			ConnectionChecker connectionChecker=new ConnectionChecker();
-			if(connectionChecker.isNetworkOnline(EditCommentPageActivity.this)==false){
-				Toast.makeText(getApplicationContext(),"Offline.",Toast.LENGTH_SHORT).show();
-				return;
-			}
+//			ConnectionChecker connectionChecker=new ConnectionChecker();
+//			if(connectionChecker.isNetworkOnline(EditCommentPageActivity.this)==false){
+//				Toast.makeText(getApplicationContext(),"Offline.",Toast.LENGTH_SHORT).show();
+//				return;
+//			}
 			String editedTitle=title.getText().toString();
 			String editedText=content.getText().toString();
 			Location location=null;

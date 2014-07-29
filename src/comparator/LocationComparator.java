@@ -8,7 +8,7 @@ import model.Comment;
 
 /**
  * A comparator class which compare 2 Comment's location with the given center location and sort them by distance.
- * @author xuping
+ * @author Yilu Su
  */
 public class LocationComparator implements Comparator<Comment>{
 	

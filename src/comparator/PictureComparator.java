@@ -6,7 +6,7 @@ import model.Comment;
 
 /**
  * A comparator class which compares 2 Comment objects and sort them by picture.
- * @author xuping
+ * @author Yilu Su
  */
 public class PictureComparator implements Comparator<Comment>{
 

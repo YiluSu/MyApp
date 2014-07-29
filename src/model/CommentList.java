@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * A list class used to store locally cached Comment objects in shared preferences with Json format and able to return a list for the listView adapter construction.
- * @author xuping
+ * @author Yilu Su
  */
 public class CommentList{
 	

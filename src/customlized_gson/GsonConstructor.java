@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder;
 /**
  * A class able to Constructs a Gson with a custom serializer / deserializer registered for Bitmap/Location.
  * adapted from https://github.com/zjullion/PicPosterComplete/blob/master/src/ca/ualberta/cs/picposter/network/ElasticSearchOperations.java
- * @author xuping/zjullion
+ * @author Yilu Su, zjullion
  */
 public class GsonConstructor {
 	/**

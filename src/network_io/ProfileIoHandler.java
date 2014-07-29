@@ -1,37 +1,41 @@
 package network_io;
 
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+//import java.io.IOException;
+//import java.io.InputStreamReader;
+//import java.io.UnsupportedEncodingException;
+//import java.lang.reflect.Type;
 
 import model.UserProfile;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
+//import org.apache.http.HttpEntity;
+//import org.apache.http.HttpResponse;
+//import org.apache.http.client.ClientProtocolException;
+//import org.apache.http.client.HttpClient;
+//import org.apache.http.client.methods.HttpGet;
+//import org.apache.http.client.methods.HttpPut;
+//import org.apache.http.entity.StringEntity;
+//import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
-import android.util.Log;
+import android.os.Environment;
+//import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+//import com.google.gson.reflect.TypeToken;
 
 import customlized_gson.GsonConstructor;
 
 /**
  * A network controller which controls the upload/download of UserProfile.
- * @author xuping
+ * @author Yilu Su
  */
 public class ProfileIoHandler{
 	public static final String SERVER_URL="http://cmput301.softwareprocess.es:8080/cmput301w14t14/";
@@ -53,24 +57,34 @@ public class ProfileIoHandler{
 		Thread thread=new Thread(){
 			@Override
 			public void run(){
-				HttpClient client=new DefaultHttpClient();
-				HttpPut request = new HttpPut(SERVER_URL+"UserProfile/"+profile.getUserName().replaceAll("\\s","")+"/");
-				try{
-					request.setEntity(new StringEntity(gson.toJson(profile)));
-				}
-				catch(UnsupportedEncodingException exception){
-					Log.w(LOG_TAG, "Error during Encoding: " + exception.getMessage());
-					return;
+				try {
+					String fileName = Environment.getExternalStorageDirectory().getPath() + "/UserProfile-" + profile.getUserName().replaceAll("\\s","") + ".txt";
+					FileWriter fileWriter = new FileWriter(fileName);
+					BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+					bufferedWriter.write(gson.toJson(profile));
+					bufferedWriter.close();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 				
-				HttpResponse response=null;
-				try{
-					response = client.execute(request);
-					Log.i(LOG_TAG, "ProfileUpdate: " + response.getStatusLine().toString());
-				}
-				catch(IOException exception){
-					Log.w(LOG_TAG, "Error during Update: " + exception.getMessage());
-				}
+//				HttpClient client=new DefaultHttpClient();
+//				HttpPut request = new HttpPut(SERVER_URL+"UserProfile/"+profile.getUserName().replaceAll("\\s","")+"/");
+//				try{
+//					request.setEntity(new StringEntity(gson.toJson(profile)));
+//				}
+//				catch(UnsupportedEncodingException exception){
+//					Log.w(LOG_TAG, "Error during Encoding: " + exception.getMessage());
+//					return;
+//				}
+//				
+//				HttpResponse response=null;
+//				try{
+//					response = client.execute(request);
+//					Log.i(LOG_TAG, "ProfileUpdate: " + response.getStatusLine().toString());
+//				}
+//				catch(IOException exception){
+//					Log.w(LOG_TAG, "Error during Update: " + exception.getMessage());
+//				}
 			}
 		};
 		thread.start();
@@ -94,36 +108,52 @@ public class ProfileIoHandler{
 		Thread thread=new Thread(){
 			@Override
 			public void run(){
-				HttpClient client=new DefaultHttpClient();
-				HttpGet request = new HttpGet(SERVER_URL+"UserProfile/"+userName.replaceAll("\\s","")+"/");
-				HttpResponse response=null;
 				String responseJson = "";
-				try{
-					response=client.execute(request);
-					Log.i(LOG_TAG, "ProfileLoad: " + response.getStatusLine().toString());
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
-					String output = reader.readLine();
+				try {
+					FileReader fileReader = new FileReader(Environment.getExternalStorageDirectory().getPath() + "/UserProfile-" + userName.replaceAll("\\s","") + ".txt");
+					BufferedReader bufferedReader = new BufferedReader(fileReader);
+					String output = bufferedReader.readLine();
 					while (output != null) {
 						responseJson+= output;
-						output = reader.readLine();
+						output = bufferedReader.readLine();
 					}
-				} 
-				catch (ClientProtocolException e){
-					e.printStackTrace();
-				} 
-				catch (IOException e){
-					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+					bufferedReader.close();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<UserProfile>>(){}.getType();
-				final ElasticSearchResponse<UserProfile> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+//				HttpClient client=new DefaultHttpClient();
+//				HttpGet request = new HttpGet(SERVER_URL+"UserProfile/"+userName.replaceAll("\\s","")+"/");
+//				HttpResponse response=null;
+//				String responseJson = "";
+//				try{
+//					response=client.execute(request);
+//					Log.i(LOG_TAG, "ProfileLoad: " + response.getStatusLine().toString());
+//					HttpEntity entity = response.getEntity();
+//					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
+//					String output = reader.readLine();
+//					while (output != null) {
+//						responseJson+= output;
+//						output = reader.readLine();
+//					}
+//				} 
+//				catch (ClientProtocolException e){
+//					e.printStackTrace();
+//				} 
+//				catch (IOException e){
+//					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+//					e.printStackTrace();
+//				}
+				
+//				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<UserProfile>>(){}.getType();
+//				final ElasticSearchResponse<UserProfile> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+				
+				final UserProfile loadedProfile = gson.fromJson(responseJson, UserProfile.class);
 				
 				Runnable getProfile = new Runnable() {
 					@Override
 					public void run() {
-						UserProfile loadedProfile=Data.getSource();
+//						UserProfile loadedProfile=Data.getSource();
 						userNameInput.setText(userName);
 						if(loadedProfile!=null){
 							photo.setImageBitmap(loadedProfile.getPhoto());
@@ -157,36 +187,52 @@ public class ProfileIoHandler{
 		Thread thread=new Thread(){
 			@Override
 			public void run(){
-				HttpClient client=new DefaultHttpClient();
-				HttpGet request = new HttpGet(SERVER_URL+"UserProfile/"+userNameValue.replaceAll("\\s","")+"/");
-				HttpResponse response=null;
 				String responseJson = "";
-				try{
-					response=client.execute(request);
-					Log.i(LOG_TAG, "ProfileLoad: " + response.getStatusLine().toString());
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
-					String output = reader.readLine();
+				try {
+					FileReader fileReader = new FileReader(Environment.getExternalStorageDirectory().getPath() + "/UserProfile-" + userNameValue.replaceAll("\\s","") + ".txt");
+					BufferedReader bufferedReader = new BufferedReader(fileReader);
+					String output = bufferedReader.readLine();
 					while (output != null) {
 						responseJson+= output;
-						output = reader.readLine();
+						output = bufferedReader.readLine();
 					}
-				} 
-				catch (ClientProtocolException e){
-					e.printStackTrace();
-				} 
-				catch (IOException e){
-					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+					bufferedReader.close();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<UserProfile>>(){}.getType();
-				final ElasticSearchResponse<UserProfile> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+//				HttpClient client=new DefaultHttpClient();
+//				HttpGet request = new HttpGet(SERVER_URL+"UserProfile/"+userNameValue.replaceAll("\\s","")+"/");
+//				HttpResponse response=null;
+//				String responseJson = "";
+//				try{
+//					response=client.execute(request);
+//					Log.i(LOG_TAG, "ProfileLoad: " + response.getStatusLine().toString());
+//					HttpEntity entity = response.getEntity();
+//					BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
+//					String output = reader.readLine();
+//					while (output != null) {
+//						responseJson+= output;
+//						output = reader.readLine();
+//					}
+//				} 
+//				catch (ClientProtocolException e){
+//					e.printStackTrace();
+//				} 
+//				catch (IOException e){
+//					Log.w(LOG_TAG, "Error receiving query response: " + e.getMessage());
+//					e.printStackTrace();
+//				}
+				
+//				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<UserProfile>>(){}.getType();
+//				final ElasticSearchResponse<UserProfile> Data = gson.fromJson(responseJson,elasticSearchResponseType);
+				
+				final UserProfile loadedProfile = gson.fromJson(responseJson, UserProfile.class);
 				
 				Runnable getProfile = new Runnable() {
 					@Override
 					public void run() {
-						UserProfile loadedProfile=Data.getSource();
+//						UserProfile loadedProfile=Data.getSource();
 						userName.setText(userNameValue);
 						if(loadedProfile!=null){
 							photo.setImageBitmap(loadedProfile.getPhoto());

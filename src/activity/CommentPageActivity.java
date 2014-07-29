@@ -4,9 +4,9 @@ package activity;
 import pop_up_window.CustomLocationLoader;
 import gps.LocationGenerator;
 import user.UserNameHandler;
-import network_io.ConnectionChecker;
+//import network_io.ConnectionChecker;
 import network_io.IoStreamHandler;
-import network_io.NetworkObserver;
+//import network_io.NetworkObserver;
 import model.Comment;
 import model.CommentMap;
 
@@ -41,7 +41,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
  * An Activity which display a specific Comment's Content, which allows user choose to edit, read/sort browse replies,
  * add a reply, add Comment as favorite, add Comment as indicated comment.
  * view author's profile (if exist).
- * @author Xuping Fang,Yilu Su
+ * @author Yilu Su
  */
 public class CommentPageActivity extends Activity implements OnItemSelectedListener {
 	
@@ -61,14 +61,14 @@ public class CommentPageActivity extends Activity implements OnItemSelectedListe
 	private CommentMap replies=null;
 	private ListViewAdapter listViewAdapter=null;
 	private IoStreamHandler io=null;
-	private ConnectionChecker connectionChecker=null;
+//	private ConnectionChecker connectionChecker=null;
 	
 	private LocationGenerator locationGenerator=null;
 	
 	private String commentID=null;
 	private String authorName=null;
 	
-	private NetworkObserver netObs=null;
+//	private NetworkObserver netObs=null;
 	
 	
 	
@@ -97,7 +97,7 @@ public class CommentPageActivity extends Activity implements OnItemSelectedListe
 		listView = (ListView)findViewById(R.id.reply_list);
 		
 		io=new IoStreamHandler();
-		connectionChecker=new ConnectionChecker();
+//		connectionChecker=new ConnectionChecker();
 		replies=new CommentMap();
 		listViewAdapter=new ListViewAdapter(this,R.layout.single_comment_layout,replies.getCurrentList());
 		listView.setAdapter(listViewAdapter);
@@ -115,7 +115,7 @@ public class CommentPageActivity extends Activity implements OnItemSelectedListe
 		
 		locationGenerator=new LocationGenerator((LocationManager)getSystemService(Context.LOCATION_SERVICE));
 		
-		netObs=new NetworkObserver();
+//		netObs=new NetworkObserver();
 	}
 	
 	/**
@@ -160,9 +160,9 @@ public class CommentPageActivity extends Activity implements OnItemSelectedListe
 			if(!authorName.equals((new UserNameHandler()).getUserName(CommentPageActivity.this))){
 				Toast.makeText(getApplicationContext(),"Only author can edit comment.",Toast.LENGTH_SHORT).show();
 			}
-			else if(connectionChecker.isNetworkOnline(CommentPageActivity.this)==false){
-				Toast.makeText(getApplicationContext(),"Offline.",Toast.LENGTH_SHORT).show();
-			}
+//			else if(connectionChecker.isNetworkOnline(CommentPageActivity.this)==false){
+//				Toast.makeText(getApplicationContext(),"Offline.",Toast.LENGTH_SHORT).show();
+//			}
 			else{
 				Intent pushIntent=new Intent(CommentPageActivity.this,EditCommentPageActivity.class);
 				pushIntent.putExtra("commentID",commentID);
@@ -184,10 +184,10 @@ public class CommentPageActivity extends Activity implements OnItemSelectedListe
 		 */
 		@Override
 		public void onClick(View v){
-			if(connectionChecker.isNetworkOnline(CommentPageActivity.this)==false){
-				Toast.makeText(getApplicationContext(),"Offline.",Toast.LENGTH_SHORT).show();
-				return;
-			}
+//			if(connectionChecker.isNetworkOnline(CommentPageActivity.this)==false){
+//				Toast.makeText(getApplicationContext(),"Offline.",Toast.LENGTH_SHORT).show();
+//				return;
+//			}
 			CacheController cc=new CacheController();
 			io.addCache(commentID,null,cc,"fav",CommentPageActivity.this);
 			Toast.makeText(getApplicationContext(),"Liked.",Toast.LENGTH_SHORT).show();
@@ -205,10 +205,10 @@ public class CommentPageActivity extends Activity implements OnItemSelectedListe
 		 */
 		@Override
 		public void onClick(View v){
-			if(connectionChecker.isNetworkOnline(CommentPageActivity.this)==false){
-				Toast.makeText(getApplicationContext(),"Offline.",Toast.LENGTH_SHORT).show();
-				return;
-			}
+//			if(connectionChecker.isNetworkOnline(CommentPageActivity.this)==false){
+//				Toast.makeText(getApplicationContext(),"Offline.",Toast.LENGTH_SHORT).show();
+//				return;
+//			}
 			CacheController cc=new CacheController();
 			io.addCache(commentID,null,cc,"indicated",CommentPageActivity.this);
 			Toast.makeText(getApplicationContext(),"Marked.",Toast.LENGTH_SHORT).show();
@@ -240,15 +240,15 @@ public class CommentPageActivity extends Activity implements OnItemSelectedListe
 	 * When the Internet is off: notify user cannot reload data and let the NetworkObserver keep checking if the network is back online.
 	 */
 	public void refresh(){
-		if(connectionChecker.isNetworkOnline(this)){
+//		if(connectionChecker.isNetworkOnline(this)){
 			replies.clear();
 			io.loadAndSetSpecificComment(commentID,title,content,commentInfo,picture,replies,this);
-			netObs.setObserver(this);
-		}
-		else{
-			Toast.makeText(getApplicationContext(),"Offline",Toast.LENGTH_SHORT).show();
-			netObs.startObservation(this);
-		}
+//			netObs.setObserver(this);
+//		}
+//		else{
+//			Toast.makeText(getApplicationContext(),"Offline",Toast.LENGTH_SHORT).show();
+//			netObs.startObservation(this);
+//		}
 	}
 	
 	/**

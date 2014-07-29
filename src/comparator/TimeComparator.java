@@ -6,7 +6,7 @@ import model.Comment;
 
 /**
  * A Comparator which compare and sort 2 Comment objects by time posted.
- * @author xuping
+ * @author Yilu Su
  */
 public class TimeComparator implements Comparator<Comment>{
     /**

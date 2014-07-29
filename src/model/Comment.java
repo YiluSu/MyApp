@@ -10,7 +10,7 @@ import android.location.Location;
 /**
  * A Comment object which contains the title,id,text,location,a picture may attached,time posted ,a userName which published this comment,
  * and all of it's reply's comment id.
- * @author xuping
+ * @author Yilu Su
  */
 public class Comment {
 	//Attributes:

@@ -38,7 +38,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
  * (with 5 different sorting options) in a ListView, user is able to
  *  view a comment, and provide the access to the local comment 
  *  which stored as favorites or indicated comment.
- * @author Xuping Fang, Yilu Su
+ * @author Yilu Su
  */
 public class FavoritePageActivity extends Activity implements OnItemSelectedListener {
 

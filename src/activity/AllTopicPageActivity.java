@@ -3,9 +3,9 @@ package activity;
 import pop_up_window.CustomLocationLoader;
 import gps.LocationGenerator;
 import user.UserNameHandler;
-import network_io.ConnectionChecker;
+//import network_io.ConnectionChecker;
 import network_io.IoStreamHandler;
-import network_io.NetworkObserver;
+//import network_io.NetworkObserver;
 import model.Comment;
 import model.CommentMap;
 
@@ -34,7 +34,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 /**
  * An activity which will Load and show all top-level comments to the user from the Internet(with 5 different sorting options),it also allow user to publish
  * a new top level comment, view a comment, and provide the access to the local comment which stored as favorites or indicated comment and logout option.
- * @author Xuping Fang, Yilu Su
+ * @author Yilu Su
  */
 
 public class AllTopicPageActivity extends Activity implements OnItemSelectedListener {
@@ -57,11 +57,11 @@ public class AllTopicPageActivity extends Activity implements OnItemSelectedList
 	
 	private CommentMap topics=null;
 	private IoStreamHandler io=null;
-	private ConnectionChecker connectionChecker=null;
+//	private ConnectionChecker connectionChecker=null;
 	
 	private LocationGenerator locationGenerator=null;
 	
-	private NetworkObserver netObs=null;
+//	private NetworkObserver netObs=null;
 
 	/**
 	 *  onCreate method.
@@ -81,7 +81,7 @@ public class AllTopicPageActivity extends Activity implements OnItemSelectedList
 		listView = (ListView)findViewById(R.id.topic_list);
 		
 		io=new IoStreamHandler();
-		connectionChecker=new ConnectionChecker();
+//		connectionChecker=new ConnectionChecker();
 		//io.clean();
 		topics=new CommentMap();
 		
@@ -92,7 +92,7 @@ public class AllTopicPageActivity extends Activity implements OnItemSelectedList
 		topics.setArrayAdapter(listViewAdapter);
 		listView.setOnItemClickListener(new ViewClick());
 		
-		netObs=new NetworkObserver();
+//		netObs=new NetworkObserver();
 	}
 	
 	/**
@@ -129,15 +129,15 @@ public class AllTopicPageActivity extends Activity implements OnItemSelectedList
 	 * When the Internet is off: notify user cannot reload data and let the NetworkObserver keep checking if the network is back online.
 	 */
 	public void refresh(){
-		if(connectionChecker.isNetworkOnline(this)){
+//		if(connectionChecker.isNetworkOnline(this)){
 			topics.clear();
 			io.loadTopLevelComments(topics,this);
-			netObs.setObserver(this);
-		}
-		else{
-			Toast.makeText(getApplicationContext(),"Offline",Toast.LENGTH_SHORT).show();
-			netObs.startObservation(this);
-		}
+//			netObs.setObserver(this);
+//		}
+//		else{
+//			Toast.makeText(getApplicationContext(),"Offline",Toast.LENGTH_SHORT).show();
+//			netObs.startObservation(this);
+//		}
 	}
 
 	/**
